@@ -13,9 +13,9 @@
             color: #333;
         }
         header {
-            background: grey;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
             color: white;
-            padding: 50px 0;
+            padding: 10px 0;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
@@ -44,16 +44,16 @@
             width: 80px; 
             height: 80px; 
             line-height: 80px; 
-            background-color: black;
-            color: white;
-            border-radius: 50%;
+            background-color: #4CAF50;
+            color: rgb(0, 0, 0);
+            border-radius: 10%;
             text-decoration: none; 
             cursor: pointer; 
-            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         .number:hover {
-            transform: scale(1.2) rotate(10deg);
+            transform: scale(1.1);
             background-color: #45a049;
             box-shadow: 0 8px 16px rgba(0,0,0,0.3);
         }
@@ -76,13 +76,8 @@
             top: 45%;
             left: 92%;
             transform: translateX(-50%);
-            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        .demo:hover {
-            transform: scale(1.2) rotate(-10deg);
-            background-color: #ff704d;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
         }
         .reset {
             position: absolute;
@@ -93,39 +88,20 @@
             color: white;
             background-color: red;
             border: none;
-            border-radius: 10px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: background-color 0.2s, box-shadow 0.2s;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         .reset:hover {
             background-color: darkred;
-            transform: scale(1.1);
             box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-        }
-        /* Animation for button hover */
-        .number::before, .demo::before {
-            content: "";
-            display: block;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background-color: rgba(255,255,255,0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
-        }
-        .number:hover::before, .demo:hover::before {
-            width: 120%;
-            height: 120%;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Missing Words</h1>
+        <h1>Missing</h1>
     </header>
     <main>
         <div id="number-container"></div>
@@ -133,7 +109,7 @@
     </main>
 
     <footer>
-        <p>&copy; B S Channabasappa First Grade College</p>
+        <p>&copy;B S Channabasappa First Grade College</p>
     </footer>
 
     <script>
