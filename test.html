@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="./logo-1.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #f0f0f0, #e0e0e0);
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 50px;
+            margin: 0;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        }
+        .number {
+            font-size: 3em;
+            margin: 15px;
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            background-color: #4CAF50;
+            color: rgb(0, 0, 0);
+            border-radius: 10%;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .number:hover {
+            transform: scale(1.1);
+            background-color: #45a049;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        .number.hidden {
+            display: none;
+        }
+        .number-group {
+            margin-bottom: 20px;
+        }
+        .reset {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            font-size: 20px;
+            color: white;
+            background-color: red;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .reset:hover {
+            background-color: darkred;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Connection</h1>
+    </header>
+    <main>
+        <div id="number-container"></div>
+        <button class="reset" onclick="resetNumbers()">Reset Numbers</button>
+    </main>
+    <footer>
+        <p>&copy; B S Channabasappa First Grade College, Davangere</p>
+    </footer>
+    <script>
+        const images = [
+            'logo-1.jpg',
+            'logo-2.jpg',
+            'logo-3.jpg',
+            'logo-4.jpg',
+            'logo-5.jpg',
+            'logo-6.jpg',
+            'logo-7.jpg',
+            'logo-8.jpg',
+            'logo-9.jpg',
+            'logo-10.jpg',
+            'logo-11.jpg',
+            'logo-12.jpg',
+            'logo-13.jpg',
+            'logo-14.jpg',
+            'logo-15.jpg',
+            'logo-16.jpg',
+            'logo-17.jpg',
+            'logo-18.jpg',
+            'logo-19.jpg',
+            'logo-20.jpg',
+            'logo-21.jpg',
+            'logo-22.jpg',
+            'logo-23.jpg',
+            'logo-24.jpg',
+            'logo-25.jpg',
+            'logo-26.jpg',
+            'logo-27.jpg',
+            'logo-28.jpg',
+            'logo-29.jpg',
+            'logo-30.jpg'
+        ];
+
+        function createNumberElement(number) {
+            const numberElement = document.createElement('div');
+            numberElement.classList.add('number');
+            numberElement.textContent = number;
+            numberElement.onclick = () => handleNumberClick(number, numberElement);
+            return numberElement;
+        }
+
+        function handleNumberClick(number, element) {
+            element.classList.add('hidden'); // Hide the clicked number element
+            storeClickedNumber(number);
+            localStorage.setItem('startTime', Date.now()); // Set the start time
+            window.location.href = `testing1.html?number=${number}`; // Navigate to image.html with the number parameter
+        }
+
+        function storeClickedNumber(number) {
+            let clickedNumbers = JSON.parse(localStorage.getItem('missingClickedNumbers')) || [];
+            if (!clickedNumbers.includes(number)) {
+                clickedNumbers.push(number);
+                localStorage.setItem('missingClickedNumbers', JSON.stringify(clickedNumbers));
+            }
+        }
+
+        function loadNumbers() {
+            const clickedNumbers = JSON.parse(localStorage.getItem('missingClickedNumbers')) || [];
+            const numberContainer = document.getElementById('number-container');
+            numberContainer.innerHTML = ''; // Clear existing numbers
+            for (let i = 0; i < 100; i += 10) {
+                const numberGroup = document.createElement('div');
+                numberGroup.classList.add('number-group');
+                for (let j = i + 1; j <= i + 10; j++) {
+                    const numberElement = createNumberElement(j);
+                    if (clickedNumbers.includes(j)) {
+                        numberElement.classList.add('hidden');
+                    }
+                    numberGroup.appendChild(numberElement);
+                }
+                numberContainer.appendChild(numberGroup);
+            }
+        }
+
+        function resetNumbers() {
+            localStorage.removeItem('missingClickedNumbers');
+            loadNumbers();
+        }
+
+        function clearStoredData() {
+            localStorage.removeItem('startTime');
+        }
+
+        window.onload = () => {
+            clearStoredData();
+            loadNumbers();
+        };
+    </script>
+</body>
+</html>

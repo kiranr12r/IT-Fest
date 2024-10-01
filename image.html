@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image and Jumbled Words</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #f0f0f0, #e0e0e0);
+            color: #333;
+            text-align: center;
+        }
+        header {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 50px;
+            margin: 0;
+        }
+        main {
+            padding: 20px;
+        }
+        .image-container {
+            margin-top: 20px;
+        }
+        .image-container img {
+            width: 300px;
+            height: auto;
+            max-width: 100%;
+            border: 2px solid #4CAF50;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border-radius: 15%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .image-container img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        .jumbled-words {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .view-answer {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 20px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .view-answer:hover {
+            background-color: #45a049;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        .timer {
+            font-size: 20px;
+            color: #FF0000;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Image and Jumbled Words</h1>
+    </header>
+    <main>
+        <div class="image-container" id="image-container">
+            <img id="question-image" src="" alt="Question Image" class="question-image">
+        </div>
+        <div class="jumbled-words" id="jumbled-words"></div>
+        <button class="view-answer" onclick="viewAnswer()">View Answer</button>
+        <div id="timer" style="margin-top: 20px; font-size: 24px; color: red;"></div>
+        <button class="view-answer" onclick="returnToMain()">Back to Main</button>
+    </main>
+
+    <script>
+        const imagePairs = [
+            { question: 'Q1.jpg', answer: 'A1.jpg' },
+            { question: 'Q2.jpg', answer: 'A2.jpg' },
+            { question: 'Q3.jpg', answer: 'A3.jpg' },
+            { question: 'Q4.jpg', answer: 'A4.jpg' },
+            { question: 'Q5.jpg', answer: 'A5.jpg' },
+            { question: 'Q6.jpg', answer: 'A6.jpg' },
+            { question: 'Q7.jpg', answer: 'A7.jpg' },
+            { question: 'Q8.jpg', answer: 'A8.jpg' },
+            { question: 'Q9.jpg', answer: 'A9.jpg' },
+            { question: 'Q10.jpg', answer: 'A10.jpg' },
+            { question: 'Q11.jpg', answer: 'A11.jpg' },
+            { question: 'Q12.jpg', answer: 'A12.jpg' },
+            { question: 'Q13.jpg', answer: 'A13.jpg' },
+            { question: 'Q14.jpg', answer: 'A14.jpg' },
+            { question: 'Q15.jpg', answer: 'A15.jpg' },
+            { question: 'Q16.jpg', answer: 'A16.jpg' },
+            { question: 'Q17.jpg', answer: 'A17.jpg' },
+            { question: 'Q18.jpg', answer: 'A18.jpg' },
+            { question: 'Q19.jpg', answer: 'A19.jpg' },
+            { question: 'Q20.jpg', answer: 'A20.jpg' },
+            { question: 'Q21.jpg', answer: 'A21.jpg' },
+            { question: 'Q22.jpg', answer: 'A22.jpg' },
+            { question: 'Q23.jpg', answer: 'A23.jpg' },
+            { question: 'Q24.jpg', answer: 'A24.jpg' },
+            { question: 'Q25.jpg', answer: 'A25.jpg' },
+            { question: 'Q26.jpg', answer: 'A26.jpg' },
+            { question: 'Q27.jpg', answer: 'A27.jpg' },
+            { question: 'Q28.jpg', answer: 'A28.jpg' },
+            { question: 'Q29.jpg', answer: 'A29.jpg' },
+            { question: 'Q30.jpg', answer: 'A30.jpg' },
+        ];
+
+        let currentPair = null;
+
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+            const results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        function shuffleString(str) {
+            const arr = str.split('');
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr.join('');
+        }
+
+        function loadImage() {
+            const number = getParameterByName('number');
+            if (number) {
+                const index = (number - 1) % imagePairs.length;
+                currentPair = imagePairs[index];
+                document.getElementById('question-image').src = `./images/${currentPair.question}`;
+                const imageName = currentPair.question.split('.')[0];
+                document.getElementById('jumbled-words').textContent = shuffleString(imageName);
+            } else {
+                document.getElementById('jumbled-words').textContent = 'No image to display.';
+            }
+        }
+
+        function viewAnswer() {
+            if (currentPair) {
+                const answerImage = document.getElementById('question-image');
+                answerImage.src = `./images/${currentPair.answer}`;
+                answerImage.classList.remove('question-image');
+                answerImage.classList.add('answer-image');
+                const imageName = currentPair.question.split('.')[0];
+                document.getElementById('jumbled-words').textContent = imageName;
+            } else {
+                document.getElementById('jumbled-words').textContent = 'No image loaded.';
+            }
+        }
+
+        function returnToMain() {
+            localStorage.removeItem('startTime');
+            window.location.href = 'test.html';
+        }
+
+        function startTimer() {
+            const startTime = localStorage.getItem('startTime');
+            if (startTime) {
+                const timerElement = document.getElementById('timer');
+                const interval = setInterval(() => {
+                    const elapsedTime = Date.now() - startTime;
+                    const remainingTime = 30 - Math.floor(elapsedTime / 1000);
+                    if (remainingTime <= 0) {
+                        clearInterval(interval);
+                        timerElement.textContent = 'Time is up!';
+                    } else {
+                        timerElement.textContent = `Time remaining: ${remainingTime} seconds`;
+                    }
+                }, 1000);
+            }
+        }
+
+        window.onload = () => {
+            loadImage();
+            startTimer();
+        };
+    </script>
+</body>
+</html>

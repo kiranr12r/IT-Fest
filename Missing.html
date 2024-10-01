@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #f0f0f0, #e0e0e0);
+            color: #333;
+        }
+        header {
+            background: grey;
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 50px;
+            margin: 0;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        }
+        .number {
+            font-size: 3em; 
+            margin: 15px; 
+            display: inline-block;
+            width: 80px; 
+            height: 80px; 
+            line-height: 80px; 
+            background-color: black;
+            color: white;
+            border-radius: 50%;
+            text-decoration: none; 
+            cursor: pointer; 
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .number:hover {
+            transform: scale(1.2) rotate(10deg);
+            background-color: #45a049;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        .number-group {
+            margin-bottom: 20px; 
+        }
+        .demo {
+            display: inline-block;
+            width: 150px;
+            height: 150px;
+            line-height: 150px;
+            margin: 7px;
+            border-radius: 50%;
+            color: rgb(12, 11, 11);
+            font-weight: bold;
+            font-size: 45px;
+            background-color: #ff5733;
+            cursor: pointer;
+            position: absolute;
+            top: 45%;
+            left: 92%;
+            transform: translateX(-50%);
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .demo:hover {
+            transform: scale(1.2) rotate(-10deg);
+            background-color: #ff704d;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        .reset {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            font-size: 20px;
+            color: white;
+            background-color: red;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .reset:hover {
+            background-color: darkred;
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        /* Animation for button hover */
+        .number::before, .demo::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease-in-out, height 0.4s ease-in-out;
+        }
+        .number:hover::before, .demo:hover::before {
+            width: 120%;
+            height: 120%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Missing Words</h1>
+    </header>
+    <main>
+        <div id="number-container"></div>
+        <button class="reset" onclick="resetNumbers()">Reset Numbers</button>
+    </main>
+
+    <footer>
+        <p>&copy; B S Channabasappa First Grade College</p>
+    </footer>
+
+    <script>
+        const images = [
+            'logo-1.jpg',
+            'logo-2.jpg',
+            'logo-3.jpg',
+            'logo-4.jpg',
+            'logo-5.jpg',
+            'logo-6.jpg',
+            'logo-7.jpg',
+            'logo-8.jpg',
+            'logo-9.jpg',
+            'logo-10.jpg'
+        ];
+
+        function createNumberElement(number) {
+            const numberElement = document.createElement('div');
+            numberElement.classList.add('number');
+            numberElement.textContent = number;
+            numberElement.onclick = () => handleNumberClick(number, numberElement);
+            return numberElement;
+        }
+
+        function handleNumberClick(number, element) {
+            element.style.display = 'none'; // Hide the clicked number element
+            storeClickedNumber(number);
+            openRandomImage();
+        }
+
+        function openRandomImage() {
+            const randomIndex = Math.floor(Math.random() * images.length);
+            const imageUrl = `./images/${images[randomIndex]}`;
+            const img = new Image();
+            img.onload = () => {
+                const imgWindow = window.open("");
+                imgWindow.document.write(`<img src="${imageUrl}" alt="Random Image" style="width:100%;">`);
+            };
+            img.onerror = () => {
+                console.error('Image failed to load:', imageUrl);
+                openRandomImage(); // Try opening another random image
+            };
+            img.src = imageUrl;
+        }
+
+        function storeClickedNumber(number) {
+            let clickedNumbers = JSON.parse(localStorage.getItem('missingClickedNumbers')) || [];
+            if (!clickedNumbers.includes(number)) {
+                clickedNumbers.push(number);
+                localStorage.setItem('missingClickedNumbers', JSON.stringify(clickedNumbers));
+            }
+        }
+
+        function loadNumbers() {
+            const clickedNumbers = JSON.parse(localStorage.getItem('missingClickedNumbers')) || [];
+            const numberContainer = document.getElementById('number-container');
+            numberContainer.innerHTML = ''; // Clear existing numbers
+            for (let i = 0; i < 100; i += 10) {
+                const numberGroup = document.createElement('div');
+                numberGroup.classList.add('number-group');
+                for (let j = i + 1; j <= i + 10; j++) {
+                    if (!clickedNumbers.includes(j)) {
+                        numberGroup.appendChild(createNumberElement(j));
+                    }
+                }
+                numberContainer.appendChild(numberGroup);
+            }
+        }
+
+        function resetNumbers() {
+            localStorage.removeItem('missingClickedNumbers');
+            loadNumbers();
+        }
+
+        window.onload = loadNumbers;
+    </script>
+</body>
+</html>

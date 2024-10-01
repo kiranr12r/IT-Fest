@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="./logo-1.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image and Jumbled Words</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #f0f0f0, #e0e0e0);
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 50px;
+            margin: 0;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border: 2px solid #333;
+            border-radius: 5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .image-container img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        .symbol {
+            font-size: 2em;
+            margin: 0 10px;
+        }
+        .view-answer {
+            padding: 10px 20px;
+            font-size: 20px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .view-answer:hover {
+            background-color: #45a049;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        #timer {
+            margin-top: 20px;
+            font-size: 24px;
+            color: red;
+        }
+        .reset {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            font-size: 20px;
+            color: white;
+            background-color: red;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .reset:hover {
+            background-color: darkred;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Image and Jumbled Words</h1>
+    </header>
+    <main>
+        <div class="image-container" id="image-container">
+            <img id="image1" src="" alt="Question 1">
+            <span class="symbol">+</span>
+            <img id="image2" src="" alt="Question 2">
+            <span class="symbol">=</span>
+            <img id="answer-image" src="" alt="Answer Image">
+        </div>
+        <button class="view-answer" onclick="viewAnswer()">View Answer</button>
+        <div id="timer"></div>
+        <button class="reset" onclick="resetQuestions()">Reset Questions</button>
+    </main>
+    <footer>
+        <p>&copy; B S Channabasappa First Grade College, Davangere</p>
+    </footer>
+    <script>
+        const imagePairs = [
+            { question1: 'block.jpg', question2: 'chain.jpg', answer: 'blockchain.png' },
+            { question1: 'fire.jpg', question2: 'wall.jpg', answer: 'firewall.jpg' },
+            { question1: 'blue.png', question2: 'tooth.jpg', answer: 'bluetooth.jpg' },
+            { question1: 'key.jpg', question2: 'board.jpg', answer: 'keyboard.jpg' },
+            { question1: 'micro.jpg', question2: 'processor.jpg', answer: 'microprocessor.jpg' },
+            { question1: 'candy.jpeg', question2: 'cane.jpg', answer: 'candycane.webp' },
+            { question1: 'stop.jpeg', question2: 'clock.jpeg', answer: 'stopclock.jpeg' },
+            { question1: 'jelly.jpeg', question2: 'fish.jpeg', answer: 'jellyfish.avif' },
+            { question1: 'butter.jpeg', question2: 'fly.jpeg', answer: 'butterfly.jpeg' },
+            { question1: 'doll.webp', question2: 'pin.jpeg', answer: 'dolphin.jpeg' },
+            { question1: 'remote.webp', question2: 'accesseries.jpeg', answer: 'remote access.webp' },
+            { question1: 'lord.jpg', question2: 'rings.jpeg', answer: 'lord of the rings.jpg'},
+            { question1: 'net.webp', question2: 'work.jpeg', answer: 'network.jpeg' },
+        ];
+
+        function loadImages() {
+            let displayedQuestions = JSON.parse(localStorage.getItem('displayedQuestions')) || [];
+
+            if (displayedQuestions.length >= imagePairs.length) {
+                alert("All questions have been displayed.");
+                return;
+            }
+
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * imagePairs.length);
+            } while (displayedQuestions.includes(randomIndex));
+
+            const selectedPair = imagePairs[randomIndex];
+            document.getElementById('image1').src = `./assets/${selectedPair.question1}`;
+            document.getElementById('image2').src = `./assets/${selectedPair.question2}`;
+            document.getElementById('answer-image').src = `./assets/${selectedPair.answer}`;
+            document.getElementById('answer-image').style.display = 'none';
+
+            displayedQuestions.push(randomIndex);
+            localStorage.setItem('displayedQuestions', JSON.stringify(displayedQuestions));
+        }
+
+        function viewAnswer() {
+            document.getElementById('answer-image').style.display = 'block';
+        }
+
+        function startTimer() {
+            let seconds = 30;
+            const timer = document.getElementById('timer');
+            const interval = setInterval(() => {
+                seconds--;
+                timer.textContent = `Time remaining: ${seconds}s`;
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    alert('Time is up!');
+                    viewAnswer();
+                }
+            }, 1000);
+        }
+
+        function resetQuestions() {
+            localStorage.removeItem('displayedQuestions');
+            loadImages();
+        }
+
+        window.onload = () => {
+            loadImages();
+            startTimer();
+        };
+    </script>
+</body>
+</html>

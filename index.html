@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./logo-1.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>B S Channabasappa First Grade College</title>
+    <style>
+        body {
+            margin: 0px;
+            text-align: center;
+            background: linear-gradient(to right, #003366, #66ccff);
+            /* Gradient background */
+            font-family: "Arial", sans-serif;
+            color: #fff;
+        }
+
+        .college-info {
+            margin: 20px auto;
+            max-width: 90%;
+            background-color: rgba(255, 255, 255, 0.9);
+            /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            color: #003366;
+            /* Dark blue text color */
+        }
+
+        .larger-heading {
+            font-size: 40px;
+            margin: 5px 0;
+            color: #003366;
+            /* Dark blue text color */
+        }
+
+        .larger-subheading {
+            font-size: 25px;
+            margin: 3px 0;
+            color: #003366;
+            /* Dark blue text color */
+        }
+
+        .w3-content {
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .mySlides {
+            width: auto;
+            /* Adjust width automatically */
+            max-height: 100%;
+            /* Maximum height */
+            position: absolute;
+            /* Absolute positioning */
+            opacity: 0;
+            /* Hide initially */
+            transition: opacity 1s ease-in-out;
+            /* Fade transition */
+        }
+
+        .mySlides.active {
+            opacity: 1;
+            /* Show active slide */
+        }
+
+        .puzzle-heading {
+            color: #fff;
+            text-decoration: none;
+            background: linear-gradient(45deg, #ffcc00, #ff9900);
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .puzzle-heading:hover {
+            background: linear-gradient(45deg, #e6b800, #e68a00);
+            transform: translateY(-3px) scale(1.08);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .minimized-image {
+            width: 80px;
+            height: auto;
+            position: absolute;
+            top: 25px;
+            left: 50px;
+            margin-left: 40px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="college-info">
+        <img src="CollegeLogo.png" alt="College Logo" class="minimized-image" />
+        <h1 class="larger-heading">B S Channabasappa First Grade College</h1>
+        <h4 class="larger-subheading">Davanagere- 577501</h4>
+    </div>
+    <h1><a href="puzzlegame.html" class="puzzle-heading">Puzzle Game</a></h1>
+
+    <div class="w3-content w3-display-container">
+        <img class="mySlides active" src="" alt="Banner 2" />
+        <img class="mySlides" src="" alt="WhatsApp Image" />
+        <img class="mySlides" src="" alt="Maxresdefault" />
+    </div>
+
+    <footer>
+        <p>&copy; B S Channabasappa First Grade College</p>
+    </footer>
+
+    <script>
+        var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            var slides = document.getElementsByClassName("mySlides");
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active"); // Remove active class from all slides
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            slides[slideIndex - 1].classList.add("active"); // Add active class to current slide
+            setTimeout(showSlides, 3000); // Change image every 3 seconds
+        }
+    </script>
+</body>
+
+</html>

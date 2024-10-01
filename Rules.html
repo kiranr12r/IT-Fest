@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Competition Rules</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #0056b3;
+        }
+
+        .rules-list {
+            list-style: none;
+            text-align: left;
+            font-size: 1.5em;
+        }
+
+        .rules-list li {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .rules-list li:before {
+            content: "✔";
+            color: #28a745;
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+
+        .next-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .next-button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 1em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Competition Rules</h1>
+        </header>
+        <main>
+            <ul class="rules-list">
+                <li>Each team should consist of two members.</li>
+                <li>All questions are relevant to IT.</li>
+                <li>You should answer the questions within 30 seconds.</li>
+                <li>Each correct answer carries 10 points.</li>
+                <li>Judges' decision is final.</li>
+            </ul>
+            <a href="puzzlegame.html" class="next-button">Next</a>
+        </main>
+        <footer>
+            <p>© 2024 B S Channabasappa First Grade Collaege</p>
+        </footer>
+    </div>
+</body>
+</html>
